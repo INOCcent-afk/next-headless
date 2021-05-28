@@ -5,5 +5,8 @@ export default function Home() {
 }
 
 export const getStaticProps = () => {
-  const client = createClient();
+  const client = createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  });
 };
