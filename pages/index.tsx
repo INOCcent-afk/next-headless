@@ -1,12 +1,28 @@
 import { createClient } from "contentful";
+import { GetStaticProps } from "next";
 
-export default function Home() {
-  return <div className="recipe-list">Recipe Lists</div>;
+export default function Home({ recipes }) {
+  console.log(recipes);
+  return (
+    <div className="recipe-list">
+      {recipes.map((recipe) => (
+        <div key={recipe.sys.id}>{recipe.fields.title}</div>
+      ))}
+    </div>
+  );
 }
 
-export const getStaticProps = () => {
+export const getStaticProps = async () => {
   const client = createClient({
     space: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
+
+  const res = await client.getEntries({ content_type: "recipe" });
+
+  return {
+    props: {
+      recipes: res.items,
+    },
+  };
 };
