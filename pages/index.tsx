@@ -1,5 +1,4 @@
 import { createClient } from "contentful";
-import { GetStaticProps } from "next";
 
 export default function Home({ recipes }) {
   console.log(recipes);
